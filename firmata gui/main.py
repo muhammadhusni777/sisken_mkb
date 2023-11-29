@@ -83,8 +83,11 @@ led3 = board.get_pin('d:6:o')
 
 pwmpin = board.get_pin('d:3:p') 
 
-button1 = board.get_pin('d:5:i')
-button2 = board.get_pin('d:4:i')
+switch1 = board.get_pin('d:5:i')
+switch2 = board.get_pin('d:4:i')
+
+switch1_status = 0
+switch2_status = 0
 
 print("Communication Successfully started")
 it = util.Iterator(board)
@@ -156,13 +159,38 @@ class table(QObject):
 ###############################MEMBACA DATA SERIAL##################
 def serial_read(num):
     global analog
+    global switch1_status
+    global switch2_status
+    global input1_color
+    global input2_color
     while True:
+        
         pwmpin.write(float(float(analog_output)/100))
+        
         
         if analog_pin.read() is not None:
             analog = float(analog_pin.read()) * 100    
         
-        print(analog)
+        
+        if switch1.read() is not None:
+            switch1_status = int(switch1.read())
+            
+        if switch2.read() is not None:
+            switch2_status = int(switch2.read())
+        
+        if (switch1_status == 1):
+            input1_color = "#df1c39"
+            
+        else:
+            input1_color = "#04f8fa"
+        
+        if (switch2_status == 1):
+            input2_color = "#df1c39"
+            
+        else:
+            input2_color = "#04f8fa"
+        
+        print(analog, switch1_status, switch1_status)
         
         
         
@@ -190,9 +218,9 @@ def serial_read(num):
         analog = int(data[0])
         #print(analog)
         if (data[1] == "0"):
-            input1_color = "#df1c39"
+            
         else:
-            input1_color = "#04f8fa"
+            
             
         if (data[2] == "0"):
             input2_color = "#df1c39"

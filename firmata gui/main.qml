@@ -93,10 +93,10 @@ Window {
 		width : 300
 		value: slider1.value
 		minimumValue: 0
-		maximumValue: 255
+		maximumValue: 100
 		
 		style: CircularGaugeStyle {
-			labelStepSize: 51
+			labelStepSize: 10
 			
 			
 			needle: Rectangle {
@@ -118,7 +118,7 @@ Window {
 		width: 300
 		value: 0
 		from:0
-		to: 255
+		to: 100
 		stepSize: 1
 		orientation: Qt.Horizontal
 		onValueChanged: {
